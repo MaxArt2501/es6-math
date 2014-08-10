@@ -4,6 +4,7 @@
         define([], factory);
     } else factory();
 })(function() {
+    "use strict";
     // x | 0 is the simplest way to implement ToUint32(x)
     var m = Math, prop,
         mathXtra = {
@@ -105,7 +106,7 @@
                 return typeof x === "number" && x === x && x !== Infinity && x !== -Infinity;
             },
             isInteger: function(x) {
-                return typeof x === "number" && Math.floor(x) === x;
+                return typeof x === "number" && x !== Infinity && x !== -Infinity && Math.floor(x) === x;
             },
             isSafeInteger: function(x) {
                 return typeof x === "number" && x > -9007199254740992 && x < 9007199254740992 && Math.floor(x) === x;
