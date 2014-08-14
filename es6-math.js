@@ -68,7 +68,7 @@
                 // If -0, must return -0.
                 return x === 0 ? +x : x < 0 ? -Math.pow(-x, 1/3) : Math.pow(x, 1/3);
             },
-            hypot: function hypot() {
+            hypot: function hypot(value1, value2) { // Must have a length of 2
                 for (var i = 0, s = 0; i < arguments.length; i++)
                     s += arguments[i] * arguments[i];
                 return Math.sqrt(s);
@@ -79,11 +79,9 @@
                 return x === 0 ? x : x < 0 ? Math.ceil(x) : Math.floor(x);
             },
             fround: typeof Float32Array === "function" ? (function(arr) {
-                return function fround(x) {
-                    arr[0] = x;
-                    return arr[0];
-                };
+                return function fround(x) {return arr[0] = x, arr[0];};
             })(new Float32Array(1)) : function fround(x) {return x;},
+
             clz32: function clz32(x) {
                 if (x === -Infinity) return 32;
                 if (x < 0 || (x |= 0) < 0) return 0;
@@ -97,18 +95,18 @@
             }
         },
         numXtra = {
-            isNaN: function(x) {
+            isNaN: function isNaN(x) {
                 // NaN is the only Javascript object such that x !== x
                 // The control on the type is for eventual host objects
                 return typeof x === "number" && x !== x;
             },
-            isFinite: function(x) {
+            isFinite: function isFinite(x) {
                 return typeof x === "number" && x === x && x !== Infinity && x !== -Infinity;
             },
-            isInteger: function(x) {
+            isInteger: function isInteger(x) {
                 return typeof x === "number" && x !== Infinity && x !== -Infinity && Math.floor(x) === x;
             },
-            isSafeInteger: function(x) {
+            isSafeInteger: function isSafeInteger(x) {
                 return typeof x === "number" && x > -9007199254740992 && x < 9007199254740992 && Math.floor(x) === x;
             },
             parseFloat: parseFloat,

@@ -75,6 +75,11 @@ On `Number` three new constants are defined:
 Where `Object.defineProperty` isn't supported (IE7-, for example) or it can't be used on plain objects
 (IE8), the values are defined as common properties and thus they can be overwritten. This can't be avoided.
 
+Some functions may not be as precise as you expect. This usually happens with large arguments, and depends
+on the formulae used to compute the result. For example, `Math.asinh` starts returning `Infinity` as soon
+as `1.3407807929942597e+154`, whereas Firefox returns finite values up to `1.7976931348623157e+308` (i.e.
+`Number.MAX_VALUE`). As of version 38, Chrome isn't as good, though.
+
 ### `Math.fround`
 
 This function is correctly polyfilled on platforms that support typed arrays (as `Float32Array`). On
