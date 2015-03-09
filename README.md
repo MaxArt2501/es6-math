@@ -13,6 +13,18 @@ As a standalone Javascript file (not needed when using AMD loaders like Require.
 
 A minified version (`es6-math.min.js`) is provided too, along with its source map.
 
+Via `npm`:
+
+```bash
+npm install es6-math
+```
+
+Via `bower`:
+
+```bash
+bower install es6-math
+```
+
 When using an AMD loader (like RequireJS in this example), you should require the module
 at the beginning like this:
 
