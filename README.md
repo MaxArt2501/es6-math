@@ -11,6 +11,8 @@ As a standalone Javascript file (not needed when using AMD loaders like Require.
 <script type="text/javascript" src="es6-math.js"></script>
 ```
 
+A minified version (`es6-math.min.js`) is provided too, along with its source map.
+
 When using an AMD loader (like RequireJS in this example), you should require the module
 at the beginning like this:
 
@@ -93,12 +95,18 @@ Chrome and Firefox).
 Moreover, older versions of Safari (6.x) are *very* slow with typed arrays, so the polyfill could be quite
 detrimental on performances.
 
+## Tests
+
+The unit tests are built on top of [mocha](http://mochajs.org/). Once the package is installed, run `npm install` from the package's root directory in order to locally install mocha, then `npm run test` to execute the tests. Open [index.html](test/index.html) with a browser to perform the tests on the client side.
+
+If mocha is installed globally, served side tests can be run with just the command `mocha` from the package's root directory.
+
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Massimo Artizzu (MaxArt2501)
+Copyright (c) 2014-2015 Massimo Artizzu (MaxArt2501)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
