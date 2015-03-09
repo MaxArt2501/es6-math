@@ -1,0 +1,30 @@
+{
+  "name": "es6-math",
+  "main": "es6-math.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/MaxArt2501/es6-math",
+  "authors": [ {
+    "name": "Massimo Artizzu",
+    "email": "maxart.x@gmail.com"
+  } ],
+  "description": "A polyfill for ES6 mathematical and helper functions and constants.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "math",
+    "mathematics",
+    "constants",
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

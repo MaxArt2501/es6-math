@@ -1,62 +1,64 @@
 (function (factory) {
-    if (typeof define === 'function' && define.amd) {
+    if (typeof define === "function" && define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
     } else factory();
 })(function() {
     "use strict";
     // x | 0 is the simplest way to implement ToUint32(x)
-    var m = Math, prop,
+    var M = Math,
+        N = Number,
+        prop, def = Object.defineProperty,
         mathXtra = {
             // Hyperbolic functions
             sinh: function sinh(x) {
                 // If -0, must return -0.
-                if (x === 0) return +x;
-                var exp = Math.exp(x);
+                if (x === 0) return x;
+                var exp = M.exp(x);
                 return exp/2 - .5/exp;
             },
             cosh: function cosh(x) {
-                var exp = Math.exp(x);
+                var exp = M.exp(x);
                 return exp/2 + .5/exp;
             },
             tanh: function tanh(x) {
                 // If -0, must return -0.
-                if (x === 0) return +x;
+                if (x === 0) return x;
                 // Mathematically speaking, the formulae are equivalent.
                 // But computationally, it's better to make exp tend to 0
                 // rather than +Infinity
                 if (x < 0) {
-                    var exp = Math.exp(2 * x);
+                    var exp = M.exp(2 * x);
                     return (exp - 1) / (exp + 1);
                 } else {
-                    var exp = Math.exp(-2 * x);
+                    var exp = M.exp(-2 * x);
                     return (1 - exp) / (1 + exp);
                 }
             },
             asinh: function asinh(x) {
-                return x === -Infinity ? -Infinity : Math.log(x + Math.sqrt(x * x + 1));
+                return x === -Infinity ? -Infinity : M.log(x + M.sqrt(x * x + 1));
             },
             acosh: function acosh(x) {
-                return x >= 1 ? Math.log(x + Math.sqrt(x * x - 1)) : NaN;
+                return x >= 1 ? M.log(x + M.sqrt(x * x - 1)) : NaN;
             },
             atanh: function atanh(x) {
-                return x >= -1 && x <= 1 ? Math.log((1 + x) / (1 - x)) / 2 : NaN;
+                return x >= -1 && x <= 1 ? M.log((1 + x) / (1 - x)) / 2 : NaN;
             },
 
             // Exponentials and logarithms
             expm1: function expm1(x) {
                 // If -0, must return -0. But Math.exp(-0) - 1 yields +0.
-                return x === 0 ? +x : Math.exp(x) - 1;
+                return x === 0 ? x : M.exp(x) - 1;
             },
             log10: function log10(x) {
-                return Math.log(x) / Math.LN10;
+                return M.log(x) / M.LN10;
             },
             log2: function log2(x) {
-                return Math.log(x) / Math.LN2;
+                return M.log(x) / M.LN2;
             },
             log1p: function log1p(x) {
                 // If -0, must return -0. But Math.log(1 + -0) yields +0.
-                return x === 0 ? +x : Math.log(1 + x);
+                return x === 0 ? x : M.log(1 + x);
             },
 
             // Various
@@ -66,21 +68,23 @@
             },
             cbrt: function cbrt(x) {
                 // If -0, must return -0.
-                return x === 0 ? +x : x < 0 ? -Math.pow(-x, 1/3) : Math.pow(x, 1/3);
+                return x === 0 ? x : x < 0 ? -M.pow(-x, 1/3) : M.pow(x, 1/3);
             },
             hypot: function hypot(value1, value2) { // Must have a length of 2
-                for (var i = 0, s = 0; i < arguments.length; i++)
-                    s += arguments[i] * arguments[i];
-                return Math.sqrt(s);
+                for (var i = 0, s = 0, args = arguments; i < args.length; i++)
+                    s += args[i] * args[i];
+                return M.sqrt(s);
             },
 
             // Rounding and 32-bit operations
             trunc: function trunc(x) {
-                return x === 0 ? x : x < 0 ? Math.ceil(x) : Math.floor(x);
+                return x === 0 ? x : x < 0 ? M.ceil(x) : M.floor(x);
             },
-            fround: typeof Float32Array === "function" ? (function(arr) {
-                return function fround(x) {return arr[0] = x, arr[0];};
-            })(new Float32Array(1)) : function fround(x) {return x;},
+            fround: typeof Float32Array === "function"
+                    ? (function(arr) {
+                        return function fround(x) { return arr[0] = x, arr[0]; };
+                    })(new Float32Array(1))
+                    : function fround(x) { return x; },
 
             clz32: function clz32(x) {
                 if (x === -Infinity) return 32;
@@ -104,10 +108,10 @@
                 return typeof x === "number" && x === x && x !== Infinity && x !== -Infinity;
             },
             isInteger: function isInteger(x) {
-                return typeof x === "number" && x !== Infinity && x !== -Infinity && Math.floor(x) === x;
+                return typeof x === "number" && x !== Infinity && x !== -Infinity && M.floor(x) === x;
             },
             isSafeInteger: function isSafeInteger(x) {
-                return typeof x === "number" && x > -9007199254740992 && x < 9007199254740992 && Math.floor(x) === x;
+                return typeof x === "number" && x > -9007199254740992 && x < 9007199254740992 && M.floor(x) === x;
             },
             parseFloat: parseFloat,
             parseInt: parseInt
@@ -119,22 +123,22 @@
         };
 
     for (prop in mathXtra)
-        if (typeof m[prop] !== "function")
-            m[prop] = mathXtra[prop];
+        if (typeof M[prop] !== "function")
+            M[prop] = mathXtra[prop];
 
     for (prop in numXtra)
-        if (typeof Number[prop] !== "function")
-            Number[prop] = numXtra[prop];
+        if (typeof N[prop] !== "function")
+            N[prop] = numXtra[prop];
 
     try {
         prop = {};
-        Object.defineProperty(prop, "text", {value: 1});
+        def(prop, 0, {});
         for (prop in numConsts)
-            if (!(prop in Number))
-                Object.defineProperty(Number, prop, {value: numConsts[prop]});
+            if (!(prop in N))
+                def(N, prop, {value: numConsts[prop]});
     } catch (e) {
         for (prop in numConsts)
-            if (!(prop in Number))
-                Number[prop] = numConsts[prop];
+            if (!(prop in N))
+                N[prop] = numConsts[prop];
     }
 });
